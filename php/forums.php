@@ -9,8 +9,8 @@
   if(isset($_GET["category"]) && is_numeric(@$_GET["category"]))
   {
     $access = $cms->CanReadCategory($_GET["category"]);
-    if($access == 0) $cms->Goto("access.php");
-    if($access == 2) $cms->Goto("forums.php?getcategorypassword=".$_GET["category"]);
+    if($access == 0) $cms->GotoUrl("access.php");
+    if($access == 2) $cms->GotoUrl("forums.php?getcategorypassword=".$_GET["category"]);
 
     $page = 0;
     if(isset($_GET["page"])  && is_numeric(@$_GET["page"])) $page = 
@@ -35,7 +35,7 @@ is_numeric(@$_GET["markallread"]))
   {
     $cat = $_GET["markallread"];
     $cms->MarkAllTopicsAsRead($cat);
-    $cms->Goto("forums.php?category=".$cat);
+    $cms->GotoUrl("forums.php?category=".$cat);
   }
   elseif(isset($_GET["readreply"]) && is_numeric(@$_GET["topicid"]) && 
 is_numeric(@$_GET["readreply"]))
@@ -43,7 +43,7 @@ is_numeric(@$_GET["readreply"]))
     $topic = $_GET["topicid"];
     $reply = $_GET["readreply"];
     $page = $cms->GetReplyPageNumber($topic, $reply);
-    $cms->Goto("forums.php?topic=".$topic."&page=".$page."#item".$reply);
+    $cms->GotoUrl("forums.php?topic=".$topic."&page=".$page."#item".$reply);
   }
   elseif(isset($_GET["getcategorypassword"]) && 
 is_numeric(@$_GET["getcategorypassword"]))
@@ -60,10 +60,10 @@ is_numeric(@$_POST["category"]))
     {
       $domain = ($_SERVER['HTTP_HOST'] != 'localhost') ? ".".$_SERVER['SERVER_NAME'] : false;
       setcookie("mdyn_forum".$_POST["category"], md5($_POST["password"]), time()+60*60*24*300, "/", $domain);
-      $cms->Goto("forums.php?category=".$_POST["category"]);
+      $cms->GotoUrl("forums.php?category=".$_POST["category"]);
     }
     else
-      $cms->Goto("forums.php");
+      $cms->GotoUrl("forums.php");
   }
   elseif(@$_GET["action"] == "unread")
   {
@@ -85,8 +85,8 @@ $_GET["page"] - 1;
   elseif(isset($_GET["topic"]) && is_numeric(@$_GET["topic"]))
   {
     $access = $cms->CanReadTopic($_GET["topic"]);
-    if($access == 0) $cms->Goto("access.php");
-    if($access == 2) $cms->Goto("forums.php?getcategorypassword=".$cms->GetTopicCategoryID($_GET["topic"]));
+    if($access == 0) $cms->GotoUrl("access.php");
+    if($access == 2) $cms->GotoUrl("forums.php?getcategorypassword=".$cms->GetTopicCategoryID($_GET["topic"]));
 
     $page = 0;
     if(isset($_GET["page"]) && is_numeric(@$_GET["page"])) $page = 
@@ -108,8 +108,8 @@ $_GET["page"] - 1;
   elseif(isset($_GET["reply"]) && is_numeric(@$_GET["reply"]))
   {
     $access = $cms->CanWriteTopic($_GET["reply"]);
-    if($access == 0) $cms->Goto("access.php");
-    if($access == 2) $cms->Goto("forums.php?getcategorypassword=".$cms->GetTopicCategoryID($_GET["reply"]));
+    if($access == 0) $cms->GotoUrl("access.php");
+    if($access == 2) $cms->GotoUrl("forums.php?getcategorypassword=".$cms->GetTopicCategoryID($_GET["reply"]));
 
     $topic = $cms->ReadForumTopic($_GET["reply"]);
     $replies = $cms->ReadAllForumReplies($_GET["reply"]);
@@ -127,8 +127,8 @@ $_GET["page"] - 1;
   elseif(isset($_GET["move"]) && is_numeric(@$_GET["move"]))
   {
     $access = $cms->CanWriteTopic($_GET["move"]);
-    if($access == 0) $cms->Goto("access.php");
-    if($access == 2) $cms->Goto("forums.php?getcategorypassword=".$_GET["originalcategory"]);
+    if($access == 0) $cms->GotoUrl("access.php");
+    if($access == 2) $cms->GotoUrl("forums.php?getcategorypassword=".$_GET["originalcategory"]);
 
     $topic = $_GET["move"];
     $cats = $cms->ReadForumCategoryNames();
@@ -142,18 +142,18 @@ is_numeric(@$_GET["deletetopic"]) &&
 is_numeric(@$_GET["originalcategory"]))
   {
     $access = $cms->CanWriteTopic($_GET["deletetopic"]);
-    if($access == 0) $cms->Goto("access.php");
-    if($access == 2) $cms->Goto("forums.php?getcategorypassword=".$_GET["originalcategory"]);
+    if($access == 0) $cms->GotoUrl("access.php");
+    if($access == 2) $cms->GotoUrl("forums.php?getcategorypassword=".$_GET["originalcategory"]);
 
     $cms->DeleteTopic($_GET["deletetopic"]);
-    $cms->Goto("forums.php?category=".$_GET["originalcategory"]);
+    $cms->GotoUrl("forums.php?category=".$_GET["originalcategory"]);
   }
   elseif(@$_GET["action"] == "movedone" && 
 is_numeric(@$_POST["category"]) && is_numeric(@$_POST["topic"]))
   {
     $access = $cms->CanWriteCategory($_POST["category"]);
-    if($access == 0) $cms->Goto("access.php");
-    if($access == 2) $cms->Goto("forums.php?getcategorypassword=".$_POST["category"]);
+    if($access == 0) $cms->GotoUrl("access.php");
+    if($access == 2) $cms->GotoUrl("forums.php?getcategorypassword=".$_POST["category"]);
 
     $topic = $_POST["topic"];
     $category = $_POST["category"];
@@ -163,13 +163,13 @@ is_numeric(@$_POST["category"]) && is_numeric(@$_POST["topic"]))
       $cms->MoveTopic($topic, $category);
     }
     
-    $cms->Goto("forums.php?topic=".$topic);
+    $cms->GotoUrl("forums.php?topic=".$topic);
   }
   elseif(isset($_GET["rename"]) && is_numeric(@$_GET["rename"]))
   {
     $access = $cms->CanWriteTopic($_GET["rename"]);
-    if($access == 0) $cms->Goto("access.php");
-    if($access == 2) $cms->Goto("forums.php?getcategorypassword=".$cms->GetTopicCategoryID($_GET["rename"]));
+    if($access == 0) $cms->GotoUrl("access.php");
+    if($access == 2) $cms->GotoUrl("forums.php?getcategorypassword=".$cms->GetTopicCategoryID($_GET["rename"]));
 
     $topic = $_GET["rename"];
     $topicname = $cms->ReadForumTopic($topic)->Title;
@@ -181,8 +181,8 @@ is_numeric(@$_POST["category"]) && is_numeric(@$_POST["topic"]))
 is_numeric(@$_POST["topic"]))
   {
     $access = $cms->CanWriteTopic($_POST["topic"]);
-    if($access == 0) $cms->Goto("access.php");
-    if($access == 2) $cms->Goto("forums.php?getcategorypassword=".$cms->GetTopicCategoryID($_POST["topic"]));
+    if($access == 0) $cms->GotoUrl("access.php");
+    if($access == 2) $cms->GotoUrl("forums.php?getcategorypassword=".$cms->GetTopicCategoryID($_POST["topic"]));
 
     $topic = $_POST["topic"];
     $topicname = $_POST["topicname"];
@@ -192,7 +192,7 @@ is_numeric(@$_POST["topic"]))
       if(!empty($topicname))
       {
         $cms->RenameTopic($topic, $topicname);
-        $cms->Goto("forums.php?topic=".$topic);
+        $cms->GotoUrl("forums.php?topic=".$topic);
       }
       else
       {
@@ -203,7 +203,7 @@ is_numeric(@$_POST["topic"]))
       }
     }
     else
-      $cms->Goto("forums.php?topic=".$topic);
+      $cms->GotoUrl("forums.php?topic=".$topic);
   }
   elseif(@$_GET["action"] == "replydone" && 
 is_numeric(@$_POST["topic"]))
@@ -216,8 +216,8 @@ is_numeric(@$_POST["topic"]))
       if(!empty($reply))
       {
         $access = $cms->CanWriteTopic($_POST["topic"]);
-        if($access == 0) $cms->Goto("access.php");
-        if($access == 2) $cms->Goto("forums.php?getcategorypassword=".$cms->GetTopicCategoryID($_POST["topic"]));
+        if($access == 0) $cms->GotoUrl("access.php");
+        if($access == 2) $cms->GotoUrl("forums.php?getcategorypassword=".$cms->GetTopicCategoryID($_POST["topic"]));
     
         $cms->ReplyToForumTopic($topic, $reply, $showsignature);
         $topic = $cms->ReadForumTopic($_POST["topic"]);
@@ -226,7 +226,7 @@ is_numeric(@$_POST["topic"]))
         $cms->assign("topic", $topic);
         $cms->assign("replies", $replies);
         $cms->assign("action", "topic");
-        $cms->Goto("forums.php?topic=".$topic->ID."&page=".$topic->PageCount."#item".$topic->LastReplyID);
+        $cms->GotoUrl("forums.php?topic=".$topic->ID."&page=".$topic->PageCount."#item".$topic->LastReplyID);
       }
       else
       {
@@ -240,7 +240,7 @@ is_numeric(@$_POST["topic"]))
     }
     else
     {
-      $cms->Goto("forums.php?topic=".$topic);
+      $cms->GotoUrl("forums.php?topic=".$topic);
       exit;
     }
   }
@@ -249,8 +249,8 @@ is_numeric(@$_POST["topic"]))
     $reply = $cms->ReadForumReply($_GET["edit"]);
 
     $access = $cms->CanWriteTopic($reply->TopicID);
-    if($access == 0) $cms->Goto("access.php");
-    if($access == 2) $cms->Goto("forums.php?getcategorypassword=".$cms->GetTopicCategoryID($reply->TopicID));
+    if($access == 0) $cms->GotoUrl("access.php");
+    if($access == 2) $cms->GotoUrl("forums.php?getcategorypassword=".$cms->GetTopicCategoryID($reply->TopicID));
     
     $cms->assign("replyid", $reply->ID);
     $cms->assign("topicid", $reply->TopicID);
@@ -271,13 +271,13 @@ is_numeric(@$_POST["replyid"]) && is_numeric(@$_POST["topicid"]))
       if(!empty($reply))
       {
         $access = $cms->CanWriteTopic($topicid);
-        if($access == 0) $cms->Goto("access.php");
-        if($access == 2) $cms->Goto("forums.php?getcategorypassword=".$cms->GetTopicCategoryID($topicid));
+        if($access == 0) $cms->GotoUrl("access.php");
+        if($access == 2) $cms->GotoUrl("forums.php?getcategorypassword=".$cms->GetTopicCategoryID($topicid));
     
         $cms->EditForumReply($replyid, $reply, $showedited, $showsignature);
         $cms->assign("action", "topic");
-        $cms->Goto("forums.php?topic=".$topicid."&page=".$cms->GetReplyPageNumber($topicid, $replyid)."#item".$replyid);
-        $cms->Goto("forums.php?topic=".$topicid);
+        $cms->GotoUrl("forums.php?topic=".$topicid."&page=".$cms->GetReplyPageNumber($topicid, $replyid)."#item".$replyid);
+        $cms->GotoUrl("forums.php?topic=".$topicid);
       }
       else
       {
@@ -291,15 +291,15 @@ is_numeric(@$_POST["replyid"]) && is_numeric(@$_POST["topicid"]))
     }
     else
     {
-      $cms->Goto("forums.php?topic=".$topicid);
+      $cms->GotoUrl("forums.php?topic=".$topicid);
       exit;
     }
   }
   elseif(isset($_GET["newtopic"]) && is_numeric(@$_GET["newtopic"]))
   {
     $access = $cms->CanWriteCategory($_GET["newtopic"]);
-    if($access == 0) $cms->Goto("access.php");
-    if($access == 2) $cms->Goto("forums.php?getcategorypassword=".$_GET["newtopic"]);
+    if($access == 0) $cms->GotoUrl("access.php");
+    if($access == 2) $cms->GotoUrl("forums.php?getcategorypassword=".$_GET["newtopic"]);
     
     $cat = $cms->ReadForumCategory($_GET["newtopic"]);
     $cms->assign("cat", $cat);
@@ -333,7 +333,7 @@ is_numeric(@$_POST["replyid"]) && is_numeric(@$_POST["topicid"]))
       if(!empty($title) && !empty($sectiontitle))
       {
         $cms->NewForumCategory($title, $description, $sectiontitle, $readaccess, $writeaccess);
-        $cms->Goto("forums.php");
+        $cms->GotoUrl("forums.php");
       }
       else
       {
@@ -350,7 +350,7 @@ is_numeric(@$_POST["replyid"]) && is_numeric(@$_POST["topicid"]))
     }
     else
     {
-      $cms->Goto("forums.php");
+      $cms->GotoUrl("forums.php");
       exit;
     }
   }
@@ -358,8 +358,8 @@ is_numeric(@$_POST["replyid"]) && is_numeric(@$_POST["topicid"]))
 is_numeric(@$_GET["editcategory"]))
   {
     $access = $cms->CanWriteCategory($_GET["editcategory"]);
-    if($access == 0) $cms->Goto("access.php");
-    if($access == 2) $cms->Goto("forums.php?getcategorypassword=".$_GET["editcategory"]);
+    if($access == 0) $cms->GotoUrl("access.php");
+    if($access == 2) $cms->GotoUrl("forums.php?getcategorypassword=".$_GET["editcategory"]);
     
     $cat = $cms->ReadForumCategory($_GET["editcategory"]);
     $groups = $cms->ReadForumGroups();
@@ -396,11 +396,11 @@ is_numeric(@$_POST["category"]))
       if(!empty($title) && !empty($sectiontitle))
       {
         $access = $cms->CanWriteCategory($id);
-        if($access == 0) $cms->Goto("access.php");
-        if($access == 2) $cms->Goto("forums.php?getcategorypassword=".$id);
+        if($access == 0) $cms->GotoUrl("access.php");
+        if($access == 2) $cms->GotoUrl("forums.php?getcategorypassword=".$id);
         
         $cms->EditForumCategory($id, $title, $description, $sectiontitle, $readaccess, $writeaccess);
-        $cms->Goto("forums.php?category=".$id);
+        $cms->GotoUrl("forums.php?category=".$id);
       }
       else
       {
@@ -418,15 +418,15 @@ is_numeric(@$_POST["category"]))
     }
     else
     {
-      $cms->Goto("forums.php?category=".$id);
+      $cms->GotoUrl("forums.php?category=".$id);
     }
   }
   elseif(isset($_GET["setcategorypassword"]) && 
 is_numeric(@$_GET["setcategorypassword"]))
   {
     $access = $cms->CanWriteCategory($_GET["setcategorypassword"]);
-    if($access == 0) $cms->Goto("access.php");
-    if($access == 2) $cms->Goto("forums.php?getcategorypassword=".$_GET["setcategorypassword"]);
+    if($access == 0) $cms->GotoUrl("access.php");
+    if($access == 2) $cms->GotoUrl("forums.php?getcategorypassword=".$_GET["setcategorypassword"]);
         
     $id = $_GET["setcategorypassword"];
     $cms->assign("category", $id);
@@ -438,14 +438,14 @@ is_numeric(@$_POST["category"]))
     if($_POST["submit"] == "Save") 
     {
       $access = $cms->CanWriteCategory($_POST["category"]);
-      if($access == 0) $cms->Goto("access.php");
-      if($access == 2) $cms->Goto("forums.php?getcategorypassword=".$_POST["category"]);
+      if($access == 0) $cms->GotoUrl("access.php");
+      if($access == 2) $cms->GotoUrl("forums.php?getcategorypassword=".$_POST["category"]);
     
       $id = $_POST["category"];
       $password = $_POST["password"];
       $cms->SetForumCategoryPassword($id, $password);
     }
-    $cms->Goto("forums.php");
+    $cms->GotoUrl("forums.php");
   }
   elseif(@$_GET["action"] == "newtopicdone" && 
 is_numeric(@$_POST["category"]))
@@ -459,8 +459,8 @@ is_numeric(@$_POST["category"]))
       if(!empty($title) && !empty($text))
       {
         $access = $cms->CanWriteCategory($_POST["category"]);
-        if($access == 0) $cms->Goto("access.php");
-        if($access == 2) $cms->Goto("forums.php?getcategorypassword=".$_POST["category"]);
+        if($access == 0) $cms->GotoUrl("access.php");
+        if($access == 2) $cms->GotoUrl("forums.php?getcategorypassword=".$_POST["category"]);
       
         $topicid = $cms->NewForumTopic($category, $title, $text, $showsignature);
         $topic = $cms->ReadForumTopic($topicid);
@@ -468,7 +468,7 @@ is_numeric(@$_POST["category"]))
         $cms->assign("topic", $topic);
         $cms->assign("replies", $replies);
         $cms->assign("action", "topic");
-        $cms->Goto("forums.php?topic=".$topic->ID);
+        $cms->GotoUrl("forums.php?topic=".$topic->ID);
       }
       else
       {
@@ -481,7 +481,7 @@ is_numeric(@$_POST["category"]))
     }
     else
     {
-      $cms->Goto("forums.php?category=".$category);
+      $cms->GotoUrl("forums.php?category=".$category);
       exit;
     }
   }
@@ -497,11 +497,11 @@ is_numeric(@$_POST["category"]))
     elseif(isset($_GET["unsticky"]))
       $topicid = $_GET["unsticky"];
 
-    if(!is_numeric($topicid)) $cms->Goto("access.php");
+    if(!is_numeric($topicid)) $cms->GotoUrl("access.php");
 
     $access = $cms->CanWriteTopic($topicid);
-    if($access == 0) $cms->Goto("access.php");
-    if($access == 2) $cms->Goto("forums.php?getcategorypassword=".$cms->GetTopicCategoryID($topicid));
+    if($access == 0) $cms->GotoUrl("access.php");
+    if($access == 2) $cms->GotoUrl("forums.php?getcategorypassword=".$cms->GetTopicCategoryID($topicid));
         
     if(isset($_GET["lock"]))
       $cms->LockTopic($topicid, true);
@@ -512,21 +512,21 @@ is_numeric(@$_POST["category"]))
     elseif(isset($_GET["unsticky"]))
       $cms->StickyTopic($topicid, false);
 
-    $cms->Goto("forums.php?topic=".$topicid);
+    $cms->GotoUrl("forums.php?topic=".$topicid);
   }
   elseif(isset($_GET["delete"]) && is_numeric(@$_GET["delete"]) && 
 is_numeric(@$_GET["topicid"]))
   {
     $access = $cms->CanWriteTopic($_GET["topicid"]);
-    if($access == 0) $cms->Goto("access.php");
-    if($access == 2) $cms->Goto("forums.php?getcategorypassword=".$cms->GetTopicCategoryID($_GET["topicid"]));
+    if($access == 0) $cms->GotoUrl("access.php");
+    if($access == 2) $cms->GotoUrl("forums.php?getcategorypassword=".$cms->GetTopicCategoryID($_GET["topicid"]));
     
     $cms->DeleteForumReply($_GET["delete"]);
-    $cms->Goto("forums.php?topic=".$_GET["topicid"]);
+    $cms->GotoUrl("forums.php?topic=".$_GET["topicid"]);
   }
   elseif(@$_GET["action"] == "search")
   {
-    if(@$_GET["submit"] == "Cancel") $cms->Goto("forums.php");
+    if(@$_GET["submit"] == "Cancel") $cms->GotoUrl("forums.php");
 
     $searchtext = @$_GET["searchtext"];
     $searchcategory = @$_GET["searchcategory"];
@@ -543,7 +543,7 @@ is_numeric(@$_GET["topicid"]))
   }
   elseif(@$_GET["action"] == "displayorder")
   {
-    if(!$ismoderator) $cms->Goto("access.php");
+    if(!$ismoderator) $cms->GotoUrl("access.php");
     // List all categories
     $cats = $cms->ReadForumCategories();
     $cms->assign("cats", $cats);
@@ -553,13 +553,13 @@ is_numeric(@$_GET["topicid"]))
 is_numeric(@$_GET["movesection"]))
   {
     $cms->MoveSection($_GET["movesection"], $_GET["dir"]);
-    $cms->Goto("forums.php?action=displayorder");
+    $cms->GotoUrl("forums.php?action=displayorder");
   }
   elseif(isset($_GET["movecategory"]) && 
 is_numeric(@$_GET["movecategory"]))
   {
     $cms->MoveCategory($_GET["movecategory"], $_GET["dir"]);
-    $cms->Goto("forums.php?action=displayorder");
+    $cms->GotoUrl("forums.php?action=displayorder");
   }
   elseif(isset($_GET["subscribe"]) && is_numeric(@$_GET["subscribe"]))
   {
@@ -569,7 +569,7 @@ is_numeric(@$_GET["movecategory"]))
   }
   elseif(@$_GET["action"] == "stats")
   {
-    if(!$ismoderator) $cms->Goto("access.php");
+    if(!$ismoderator) $cms->GotoUrl("access.php");
     // List stats
     $result = $cms->CoreSQL("SELECT t1.TopicID, COUNT( t1.TopicID ) AS RowCount, t2.Title FROM `forum_topicwatch` AS t1 LEFT JOIN forum_topics AS t2 ON t1.TopicID = t2.id GROUP BY t1.TopicID ORDER BY RowCount DESC LIMIT 20");
     $mostviewed = array();

@@ -3,6 +3,6 @@
   $cms = new Core();
   
   $cms->Logout();
-  $cms->Goto("home.php");
+  $cms->GotoUrl("home.php");
   exit;
 ?>

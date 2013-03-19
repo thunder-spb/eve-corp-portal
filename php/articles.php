@@ -39,7 +39,7 @@
     $article = $_GET["article"];
     $id = $_GET["deletecomment"];
     $cms->DeleteArticleComment($id);
-    $cms->Goto("articles.php?read=".$article);
+    $cms->GotoUrl("articles.php?read=".$article);
   }
   elseif(isset($_GET["postcomment"]) && is_numeric(@$_GET["postcomment"]))
   {
@@ -64,11 +64,11 @@
       else
       {
         $cms->NewArticle($_POST["title"], $_POST["text"], $_POST["readaccess"], $_POST["writeaccess"]);
-        $cms->Goto("articles.php");
+        $cms->GotoUrl("articles.php");
       }
     }
     else
-      $cms->Goto("articles.php");
+      $cms->GotoUrl("articles.php");
   }
   elseif($action == "editdone" && is_numeric(@$_POST["id"]))
   {
@@ -82,23 +82,23 @@
       else
       {
         $cms->EditArticle($_POST["id"], $_POST["title"], $_POST["text"], $_POST["readaccess"], $_POST["writeaccess"]);
-        $cms->Goto("articles.php");
+        $cms->GotoUrl("articles.php");
       }
     }
     elseif($_POST["submit"] == "Delete" && is_numeric(@$_POST["id"]))
     {
       $cms->DeleteArticle($_POST["id"]);
-      $cms->Goto("articles.php");
+      $cms->GotoUrl("articles.php");
     }
     else
-      $cms->Goto("articles.php");
+      $cms->GotoUrl("articles.php");
   }
   elseif($action == "newcomment" && is_numeric(@$_POST["article"]))
   {
     $id = $_POST["article"];
     $text = @$_POST["text"];
     if(!empty($text)) $cms->NewArticleComment($id, $text);
-    $cms->Goto("articles.php?read=".$id);
+    $cms->GotoUrl("articles.php?read=".$id);
   }
   
   if(!isset($_POST["readaccess"])) $_POST["readaccess"] = 2;

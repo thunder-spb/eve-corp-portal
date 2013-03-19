@@ -35,7 +35,7 @@
   elseif(isset($_GET["delete"]) && is_numeric(@$_GET["delete"]))
   {
     $cms->DeleteNewsItem($_GET["delete"]);
-    $cms->Goto("news.php");
+    $cms->GotoUrl("news.php");
   }
   elseif($action == "newdone")
   {
@@ -49,11 +49,11 @@
       else
       {
         $cms->InsertNewsItem($_POST["title"], $_POST["text"], $_POST["readaccess"]);
-        $cms->Goto("news.php");
+        $cms->GotoUrl("news.php");
       }
     }
     else
-      $cms->Goto("news.php");
+      $cms->GotoUrl("news.php");
   }
   elseif($action == "editdone")
   {
@@ -69,16 +69,16 @@
         if(is_numeric($_POST["id"])) $cms->EditNewsItem($_POST["id"], 
 $_POST["title"], 
 $_POST["text"], $_POST["readaccess"]);
-        $cms->Goto("news.php");
+        $cms->GotoUrl("news.php");
       }
     }
     elseif($_POST["submit"] == "Delete")
     {
       if(is_numeric($_POST["id"])) $cms->DeleteNewsItem($_POST["id"]);
-      $cms->Goto("news.php");
+      $cms->GotoUrl("news.php");
     }
     else
-      $cms->Goto("news.php");
+      $cms->GotoUrl("news.php");
   }
   elseif($action == "archive")
   {

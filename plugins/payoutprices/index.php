@@ -3,7 +3,7 @@ require_once('../../core/core.class.php');
 $core = new Core();
 
 //Access control
-if($core->CurrentUser()->AccessRight() < 4) $core->Goto('../../php/access.php');
+if($core->CurrentUser()->AccessRight() < 4) $core->GotoUrl('../../php/access.php');
 
 // Variable of Current User & Misc
 $portalid = $_GET["portalid"];
@@ -68,7 +68,7 @@ elseif($action == "qtc7" || $action == "qtc30")
       UpdatePrices();
     }
   }
-  $core->Goto("index.php?result=1");
+  $core->GotoUrl("index.php?result=1");
 }
 elseif($action == "edit" || $action == "payout")
 {
@@ -90,7 +90,7 @@ elseif($action == "editdone" || $action == "payoutdone")
 $columns = array(0 => "","","avg","median","","","","Bavg","Bmedian","","","","Savg","Smedian");
 
   if(@$_POST["submit"] != "Save")
-    $core->Goto("index.php");
+    $core->GotoUrl("index.php");
 
   foreach($_POST as $key => $value)
   {
@@ -147,7 +147,7 @@ $columns = array(0 => "","","avg","median","","","","Bavg","Bmedian","","","","S
   }
   // Item prices
   UpdatePrices();
-  $core->Goto("index.php?result=1");
+  $core->GotoUrl("index.php?result=1");
 }
 elseif($action == "refine")
 {
@@ -161,7 +161,7 @@ elseif($action == "refine")
 elseif($action == "refinedone")
 {
   if(@$_POST["submit"] != "Save Parameters")
-    $core->Goto("index.php");
+    $core->GotoUrl("index.php");
     
   $refining = @$_POST["refining"];
   $refinery_efficiency = @$_POST["refinery_efficiency"];
@@ -185,11 +185,11 @@ elseif($action == "refinedone")
   
   UpdatePrices();
 
-  $core->Goto("index.php?result=2");
+  $core->GotoUrl("index.php?result=2");
 }
 elseif($action == "operationalitems")
 {
-if($core->CurrentUser()->AccessRight() < 4) $core->Goto('../../php/access.php');
+if($core->CurrentUser()->AccessRight() < 4) $core->GotoUrl('../../php/access.php');
     $result2 = $core->SQL("SELECT * FROM operations_items ORDER BY GroupID, Name ASC");
 // id  EveTypeID  Name  GroupID   Price  DisplayOrder
     while($row = mysql_fetch_assoc($result2))
@@ -210,7 +210,7 @@ $core->assign('manage_DisplayOrder', $manage_DisplayOrder);
 }
 elseif($action == "newitem")
 {
-if($core->CurrentUser()->AccessRight() < 4) $core->Goto('../../php/access.php');
+if($core->CurrentUser()->AccessRight() < 4) $core->GotoUrl('../../php/access.php');
   $result = $core->EveSQL("SELECT DISTINCT *  FROM `invMarketGroups` WHERE `graphicID` != 2703 AND `hasTypes` = 0 ORDER BY marketGroupName");
   $items = array();
   while($row = mysql_fetch_assoc($result))
@@ -224,7 +224,7 @@ $core->assign('action', $action);
 }
 elseif($action == "newitemp")
 {
-if($core->CurrentUser()->AccessRight() < 4) $core->Goto('../../php/access.php');
+if($core->CurrentUser()->AccessRight() < 4) $core->GotoUrl('../../php/access.php');
 $items = array();
   foreach($_POST as $key => $value)
   {
@@ -244,7 +244,7 @@ $core->assign('action', $action);
 }
 elseif($action == "newitempp")
 {
-if($core->CurrentUser()->AccessRight() < 4) $core->Goto('../../php/access.php');
+if($core->CurrentUser()->AccessRight() < 4) $core->GotoUrl('../../php/access.php');
 $items = array();
   foreach($_POST as $key => $value)
   {
@@ -265,7 +265,7 @@ $core->assign('action', $action);
 }
 elseif($action == "newitemsave")
 {
-if($core->CurrentUser()->AccessRight() < 4) $core->Goto('../../php/access.php');
+if($core->CurrentUser()->AccessRight() < 4) $core->GotoUrl('../../php/access.php');
 $items = array();
 
   foreach($_POST as $key => $value)
@@ -297,12 +297,12 @@ $items = array();
         }
   }
 $url = "index.php?action=operationalitems";
-$core->Goto($url);
+$core->GotoUrl($url);
 }
 elseif($action == "removeitem")
 {
-if($core->CurrentUser()->AccessRight() < 4) $core->Goto('../../php/access.php');
-if($template == 0) $core->Goto('index.php');
+if($core->CurrentUser()->AccessRight() < 4) $core->GotoUrl('../../php/access.php');
+if($template == 0) $core->GotoUrl('index.php');
 $registered = $core->SQL("SELECT COUNT(*) FROM `operations_items` WHERE id =".$template);
 $total_records = mysql_num_rows($registered);
 
@@ -312,7 +312,7 @@ if ($total_records <> 0)
     }
 
 $url = "index.php?action=operationalitems&result=3";
-$core->Goto($url);
+$core->GotoUrl($url);
 }
 
 $result = $core->SQL("SELECT * FROM `operations_groups` ORDER BY `DisplayOrder`, `GroupID`");

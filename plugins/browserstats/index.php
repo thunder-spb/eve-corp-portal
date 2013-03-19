@@ -11,8 +11,8 @@ require_once('browser.php');
 // AccessRight() is a method of the User object that returns: 0 for guests, 1 for registered guests, 2 for corp members, 3 for managers and 4 for directors
 // Here we check to see if the current user is a registered guest (A registered guest is a registered user but not a corp member)
 // If we fail the check, the user will be redirected to an error page. 
-// Goto($url) is a method of the core object which is a shorthand for { header("Location: $url); exit; }
-if($core->CurrentUser()->AccessRight() < 1) $core->Goto('../../php/access.php');
+// GotoUrl($url) is a method of the core object which is a shorthand for { header("Location: $url); exit; }
+if($core->CurrentUser()->AccessRight() < 1) $core->GotoUrl('../../php/access.php');
 
 // User name
 $username = $core->CurrentUser()->Name;

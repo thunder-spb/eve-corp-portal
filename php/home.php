@@ -18,7 +18,7 @@ else
   if(isset($_GET["shout"])) 
   {
     $cms->SaveShout($_GET["shout"]);
-    $cms->Goto("home.php");
+    $cms->GotoUrl("home.php");
   }
 
   // Current user

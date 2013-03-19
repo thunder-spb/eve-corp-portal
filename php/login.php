@@ -14,12 +14,12 @@
       $lastpage = $_SESSION["lastpage"];
       unset($_SESSION["lastpage"]);
       if((stripos($lastpage, "login.php") !== FALSE) || (stripos($lastpage, "newpassword.php") !== FALSE) || (stripos($lastpage, "register.php") !== FALSE))
-        $cms->Goto("home.php");
+        $cms->GotoUrl("home.php");
       else
-        $cms->Goto($lastpage);
+        $cms->GotoUrl($lastpage);
     }
     else
-      $cms->Goto("home.php");
+      $cms->GotoUrl("home.php");
   }
   else
     $cms->Log("Login error. Wrong username (".$username.") or password.");

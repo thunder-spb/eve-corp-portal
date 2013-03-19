@@ -36,11 +36,11 @@
       else
       {
         $cms->NewNotepad($_POST["title"], $_POST["text"]);
-        $cms->Goto("notepad.php");
+        $cms->GotoUrl("notepad.php");
       }
     }
     else
-      $cms->Goto("notepad.php");
+      $cms->GotoUrl("notepad.php");
   }
   elseif($action == "editdone")
   {
@@ -56,17 +56,17 @@
         if(is_numeric($_POST["id"])) 
 $cms->EditNotepad($_POST["id"], $_POST["title"], 
 $_POST["text"]);
-        $cms->Goto("notepad.php");
+        $cms->GotoUrl("notepad.php");
       }
     }
     elseif($_POST["submit"] == "Delete" && 
 is_numeric(@$_POST["id"]))
     {
       $cms->DeleteNotepad($_POST["id"]);
-      $cms->Goto("notepad.php");
+      $cms->GotoUrl("notepad.php");
     }
     else
-      $cms->Goto("notepad.php");
+      $cms->GotoUrl("notepad.php");
   }
  
   $cms->assign("action", $action);

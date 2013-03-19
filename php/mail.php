@@ -64,7 +64,7 @@ $_GET["page"] - 1;
     $query = @$_GET["query"];
     $mailbox = @$_GET["mailbox"];
     if(empty($query))
-      $cms->Goto("mail.php?action=".$mailbox);
+      $cms->GotoUrl("mail.php?action=".$mailbox);
       
     $isinbox = ($mailbox == "inbox");    
     $messages = $cms->SearchMailBox($query, $isinbox, $folder);
@@ -180,7 +180,7 @@ $_GET["page"] - 1;
       else
       {
         $cms->SendMail($subject, $text, $toid, $ccid, $bccid);
-        $cms->Goto("mail.php");
+        $cms->GotoUrl("mail.php");
       }
     }
     elseif($_POST["submit"] == "Add To")
@@ -216,12 +216,12 @@ $_GET["page"] - 1;
       $action = "compose";
     }
     else
-      $cms->Goto("mail.php");
+      $cms->GotoUrl("mail.php");
   }
   elseif($action == "delete")
   {
     $cms->DeleteMail($message);
-    $cms->Goto("mail.php");
+    $cms->GotoUrl("mail.php");
   }
   elseif($action == "do")
   {
@@ -241,7 +241,7 @@ $_GET["page"] - 1;
     elseif($todo == "markunread")
       $cms->MarkMailRead($ids, false);
       
-    $cms->Goto("mail.php?action=".$_POST["mailbox"]);
+    $cms->GotoUrl("mail.php?action=".$_POST["mailbox"]);
   }
   
   $cms->assign("action", $action);

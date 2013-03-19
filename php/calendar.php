@@ -54,12 +54,12 @@
   elseif(isset($_GET["delete"]) && is_numeric(@$_GET["delete"]))
   {
     $cms->DeleteCalendarEntry($_GET["delete"]);
-    $cms->Goto("calendar.php");    
+    $cms->GotoUrl("calendar.php");    
   }
   elseif(isset($_GET["signup"]) && is_numeric(@$_GET["signup"]))
   {
     $cms->SignUpToCalendarEntry($_GET["signup"]);
-    $cms->Goto("calendar.php");    
+    $cms->GotoUrl("calendar.php");    
   }
   elseif($action == "new")
   {
@@ -94,11 +94,11 @@
       else
       {
         $cms->InsertCalendarEntry($date, $_POST["title"], $_POST["text"], $_POST["readaccess"]);
-        $cms->Goto("calendar.php");
+        $cms->GotoUrl("calendar.php");
       }
     }
     else
-      $cms->Goto("calendar.php");
+      $cms->GotoUrl("calendar.php");
   }
   elseif($action == "editdone")
   {
@@ -123,16 +123,16 @@
       else
       {
         $cms->EditCalendarEntry($_POST["id"], $date, $_POST["title"], $_POST["text"], $_POST["readaccess"]);
-        $cms->Goto("calendar.php");
+        $cms->GotoUrl("calendar.php");
       }
     }
     elseif($_POST["submit"] == "Delete")
     {
       if(is_numeric($_POST["id"])) $cms->DeleteCalendarEntry($_POST["id"]);
-      $cms->Goto("calendar.php");
+      $cms->GotoUrl("calendar.php");
     }
     else
-      $cms->Goto("calendar.php");
+      $cms->GotoUrl("calendar.php");
   }
   elseif($action == "home")
   {

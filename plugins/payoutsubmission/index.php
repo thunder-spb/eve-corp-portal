@@ -3,7 +3,7 @@ require_once('../../core/core.class.php');
 $core = new Core();
 
 //Access control
-if($core->CurrentUser()->AccessRight() < 2) $core->Goto('../../php/access.php');
+if($core->CurrentUser()->AccessRight() < 2) $core->GotoUrl('../../php/access.php');
 
 $action = @$_GET["action"];
 if(empty($action)) $action = "home";

@@ -2,7 +2,7 @@
   require_once('../core/core.class.php');
   $cms = new Core();
 
-  if(!$cms->AccessCheck(User::EVE_Director, array(User::MDYN_CEO, User::MDYN_Administrator, User::MDYN_Developer))) { $cms->Goto("access.php"); }
+  if(!$cms->AccessCheck(User::EVE_Director, array(User::MDYN_CEO, User::MDYN_Administrator, User::MDYN_Developer))) { $cms->GotoUrl("access.php"); }
   
   $action = @$_GET["action"];
   if(empty($action)) $action = "plugins";
@@ -46,11 +46,11 @@
       else
       {
         $cms->EditPlugIn($_POST["id"], $_POST["title"], $_POST["releasecontrol"], $_POST["accesscontrol"], (@$_POST["showigb"] == "on" ? true : false), (@$_POST["showadmin"] == "on" ? true : false));
-        $cms->Goto("plugins.php");
+        $cms->GotoUrl("plugins.php");
       }
     }
     else
-      $cms->Goto("plugins.php");
+      $cms->GotoUrl("plugins.php");
   }
   elseif($action == "newplugin")
   {
@@ -86,11 +86,11 @@
       else
       {
         $cms->NewPlugIn($_POST["name"], $_POST["title"], $_POST["accesscontrol"], (@$_POST["createfiles"] == "on" ? true : false), (@$_POST["showigb"] == "on" ? true : false), (@$_POST["showadmin"] == "on" ? true : false));
-        $cms->Goto("plugins.php");
+        $cms->GotoUrl("plugins.php");
       }
     }
     else
-      $cms->Goto("plugins.php");
+      $cms->GotoUrl("plugins.php");
   }
   elseif(isset($_GET["delete"]) && is_numeric(@$_GET["delete"]))
   {
@@ -104,10 +104,10 @@
     if($_POST["submit"] == "Delete")
     {
       $cms->DeletePlugIn($_POST["id"], @$_POST["deletefolder"] == "on" ? true : false);
-      $cms->Goto("plugins.php");
+      $cms->GotoUrl("plugins.php");
     }
     else
-      $cms->Goto("plugins.php");
+      $cms->GotoUrl("plugins.php");
   }
   elseif(isset($_GET["developer"]) && is_numeric(@$_GET["developer"]))
   {
@@ -125,10 +125,10 @@
 if(is_numeric($_POST["developer"])  && is_numeric($_POST["id"])) 
 $cms->AssignPlugInDeveloper($_POST["id"], 
 $_POST["developer"]);
-      $cms->Goto("plugins.php");
+      $cms->GotoUrl("plugins.php");
     }
     else
-      $cms->Goto("plugins.php");
+      $cms->GotoUrl("plugins.php");
   }
   elseif($action == "plugins")
   {

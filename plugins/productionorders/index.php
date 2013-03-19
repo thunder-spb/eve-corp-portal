@@ -3,7 +3,7 @@ require_once('../../core/core.class.php');
 $core = new Core();
 
 //Access control
-if($core->CurrentUser()->AccessRight() < 1) $core->Goto('../../php/access.php');
+if($core->CurrentUser()->AccessRight() < 1) $core->GotoUrl('../../php/access.php');
 
 $action = @$_GET["action"];
 if(empty($action)) $action = "home";
@@ -99,7 +99,7 @@ elseif($action == "adddone")
     $query .= $priority.")";
     $core->SQL($query);
   }
-  $core->Goto("index.php");
+  $core->GotoUrl("index.php");
 }
 elseif($action == "addmisc")
 {
@@ -127,19 +127,19 @@ elseif($action == "addmiscdone")
     $query .= "'".$core->SQLEscape($notes)."')";
     $core->SQL($query);
   }
-  $core->Goto("index.php");
+  $core->GotoUrl("index.php");
 }
 elseif($action == "cancel")
 {
   $id = $_GET["cancel"];
   $core->SQL("UPDATE production_orders SET IsDeleted=1 WHERE id=".$id." LIMIT 1");
-  $core->Goto("index.php");
+  $core->GotoUrl("index.php");
 }
 elseif($action == "resubmit")
 {
   $id = $_GET["resubmit"];
   $core->SQL("UPDATE production_orders SET Status=0 WHERE id=".$id." LIMIT 1");
-  $core->Goto("index.php");
+  $core->GotoUrl("index.php");
 }
 elseif($action == "help" || $action == "edithelp")
 {
@@ -153,7 +153,7 @@ elseif($action == "edithelpdone")
     $helptext = $_POST["helptext"];
     file_put_contents("help.html", $helptext);
   }
-  $core->Goto("index.php?action=help");
+  $core->GotoUrl("index.php?action=help");
 }
 
 $core->assign('action', $action);

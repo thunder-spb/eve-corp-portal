@@ -2,7 +2,7 @@
   require_once('../core/core.class.php');
   $cms = new Core();
 
-  if(!$cms->AccessCheck(User::EVE_Director, array(User::MDYN_CEO, User::MDYN_Administrator))) { $cms->Goto("access.php"); }
+  if(!$cms->AccessCheck(User::EVE_Director, array(User::MDYN_CEO, User::MDYN_Administrator))) { $cms->GotoUrl("access.php"); }
   
   $action = @$_GET["action"];
   if(empty($action)) $action = "users";
@@ -41,11 +41,11 @@
         else
           $cms->EditArticle($_POST["id"], $_POST["title"], $_POST["text"], 2, 4);
         $cms->Log("Edited classified article: ".$_POST["title"]);
-        $cms->Goto("admin.php?action=articles");
+        $cms->GotoUrl("admin.php?action=articles");
       }
     }
     else
-      $cms->Goto("admin.php?action=articles");
+      $cms->GotoUrl("admin.php?action=articles");
   }
   elseif($action == "shouts")
   {
@@ -55,7 +55,7 @@
   elseif(isset($_GET["deleteshout"]) && is_numeric(@$_GET["deleteshout"]))
   {
     $cms->DeleteShout($_GET["deleteshout"]);
-    $cms->Goto("admin.php?action=shouts");
+    $cms->GotoUrl("admin.php?action=shouts");
   }
   elseif($action == "users")
   {
@@ -125,11 +125,11 @@
         $cms->SetSetting("SecondaryDirectorAPIUserID", $_POST["secondaryapiuserid"]);
         $cms->SetSetting("SecondaryDirectorAPIKey", $_POST["secondaryapikey"]);
         $cms->Log("Changed Corporation/Alliance settings.");
-        $cms->Goto("admin.php");
+        $cms->GotoUrl("admin.php");
       }
     }
     else
-      $cms->Goto("admin.php");
+      $cms->GotoUrl("admin.php");
   }
   elseif($action == "frontpage")
   {
@@ -153,11 +153,11 @@
       {
         $cms->SetSetting("NewsLimit", $_POST["NewsLimit"]);
         $cms->Log("Changed Front Page Configuration Settings.");
-        $cms->Goto("admin.php");
+        $cms->GotoUrl("admin.php");
       }
     }
     else
-      $cms->Goto("admin.php");
+      $cms->GotoUrl("admin.php");
   }
   elseif($action == "membercorps")
   {
@@ -187,10 +187,10 @@
     {
       set_time_limit(0);
       $cms->UpdateAllianceMembers();
-      $cms->Goto("admin.php?action=membercorps");    
+      $cms->GotoUrl("admin.php?action=membercorps");    
     }
     else
-      $cms->Goto("admin.php");
+      $cms->GotoUrl("admin.php");
   }
   elseif($action == "setinactivity")
   {
@@ -208,11 +208,11 @@
       else
       {
         $cms->SetSetting("InactivityPeriod", $_POST["inactivityperiod"]);
-        $cms->Goto("admin.php");
+        $cms->GotoUrl("admin.php");
       }
     }
     else
-      $cms->Goto("admin.php");
+      $cms->GotoUrl("admin.php");
   }
   elseif($action == "activityreport")
   {
@@ -309,7 +309,7 @@
       $cms->UpdateAllUserRoles($users);
       $cms->Log("Edited user roles.");
     }
-    $cms->Goto("admin.php");
+    $cms->GotoUrl("admin.php");
   }
   elseif($action == "guests")
   {
@@ -348,7 +348,7 @@
       $cms->UpdateBannedUsers($users);
       $cms->Log("Banned or unbanned users.");
     }
-    $cms->Goto("admin.php");
+    $cms->GotoUrl("admin.php");
   }
   elseif($action == "log")
   {

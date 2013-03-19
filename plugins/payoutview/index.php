@@ -3,7 +3,7 @@ require_once('../../core/core.class.php');
 $core = new Core();
 
 //Access control
-if($core->CurrentUser()->AccessRight() < 2) $core->Goto('../../php/access.php');
+if($core->CurrentUser()->AccessRight() < 2) $core->GotoUrl('../../php/access.php');
 
 $action = @$_GET["action"];
 
@@ -38,7 +38,7 @@ if(isset($_GET["edit"]) || isset($_GET["view"]))
   if($core->CurrentUser()->AccessRight() < 3)
   {
     if(($action == "edit") && (!$canedit))
-      $core->Goto("index.php");
+      $core->GotoUrl("index.php");
   }
    
   $names = $core->GetAllUserNames();
@@ -99,7 +99,7 @@ elseif(isset($_GET["cancel"]))
   if($canedit)
     $core->SQL("UPDATE operations_submissions SET Status=5 WHERE id=".$id." LIMIT 1");
   
-  $core->Goto("index.php");
+  $core->GotoUrl("index.php");
 }
 elseif($action == "editdone")
 {
@@ -144,7 +144,7 @@ elseif($action == "editdone")
   $query .= "Items='".implode(",", $itemsdb)."',";
   $query .= "Notes='".$core->SQLEscape($notes)."' WHERE id=".$id." LIMIT 1";
   $core->SQL($query);
-  $core->Goto("index.php");
+  $core->GotoUrl("index.php");
 }
 else
 {

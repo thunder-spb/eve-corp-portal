@@ -3,7 +3,7 @@ require_once('../../core/core.class.php');
 $core = new Core();
 
 //Access control
-if($core->CurrentUser()->AccessRight() < 3) $core->Goto('../../php/access.php');
+if($core->CurrentUser()->AccessRight() < 3) $core->GotoUrl('../../php/access.php');
 
 $action = @$_GET["action"];
 $core->assign('result', 0);
@@ -59,7 +59,7 @@ elseif($action == "change")
   }
   $status = $_POST["status"];
   $core->SQL("UPDATE production_orders SET Status=".$status.",Manager=".$core->CurrentUser()->ID." WHERE FIND_IN_SET(id, '".implode(",", $ids)."')");
-  $core->Goto("index.php");
+  $core->GotoUrl("index.php");
 }
 elseif($action == "delete")
 {
@@ -74,11 +74,11 @@ elseif($action == "delete")
   if ($confirmstatus == 4 || $confirmstatus == 6 || $confirmcount == 0)
   {
     $core->SQL("UPDATE production_orders SET IsDeleted=1 WHERE id=".$id." LIMIT 1");
-    $core->Goto("index.php");
+    $core->GotoUrl("index.php");
   }
   else
   {
-    $core->Goto("index.php?result=1");
+    $core->GotoUrl("index.php?result=1");
   }
 }
 

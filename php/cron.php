@@ -2,7 +2,7 @@
   require_once('../core/core.class.php');
   $cms = new Core();
   
-  if(!$cms->AccessCheck(User::EVE_Director, array(User::MDYN_CEO, User::MDYN_Administrator, User::MDYN_Developer))) { $cms->Goto("access.php"); }
+  if(!$cms->AccessCheck(User::EVE_Director, array(User::MDYN_CEO, User::MDYN_Administrator, User::MDYN_Developer))) { $cms->GotoUrl("access.php"); }
   
   $action = @$_GET["action"];
   if(empty($action)) $action = "cronjobs";
@@ -43,16 +43,16 @@
       else
       {
         $cms->EditCronJob($_POST["id"], $_POST["title"], $_POST["type"], $_POST["source"]);
-        $cms->Goto("cron.php");
+        $cms->GotoUrl("cron.php");
       }
     }
     else
-      $cms->Goto("cron.php");
+      $cms->GotoUrl("cron.php");
   }
   if(isset($_GET["run"]) && is_numeric(@$_GET["run"]))
   {
     $cms->RunCronJob($_GET["run"]);
-    $cms->Goto("cron.php");
+    $cms->GotoUrl("cron.php");
   }
   elseif($action == "newdone")
   {
@@ -69,11 +69,11 @@
       else
       {
         $cms->NewCronJob($_POST["title"], $_POST["type"], @$_POST["source"]);
-        $cms->Goto("cron.php");
+        $cms->GotoUrl("cron.php");
       }
     }
     else
-      $cms->Goto("cron.php");
+      $cms->GotoUrl("cron.php");
   }
   elseif(isset($_GET["delete"]) && is_numeric(@$_GET["delete"]))
   {
@@ -87,10 +87,10 @@
     if($_POST["submit"] == "Delete")
     {
       if(is_numeric($_POST["id"])) $cms->DeleteCronJob($_POST["id"]);
-      $cms->Goto("cron.php");
+      $cms->GotoUrl("cron.php");
     }
     else
-      $cms->Goto("cron.php");
+      $cms->GotoUrl("cron.php");
   }
   elseif(isset($_GET["developer"]) && is_numeric(@$_GET["developer"]))
   {
@@ -107,10 +107,10 @@
       if(is_numeric($_POST["id"]) && is_numeric($_POST["developer"])) 
 $cms->AssignCronDeveloper($_POST["id"], 
 $_POST["developer"]);
-      $cms->Goto("cron.php");
+      $cms->GotoUrl("cron.php");
     }
     else
-      $cms->Goto("cron.php");
+      $cms->GotoUrl("cron.php");
  }
   elseif($action == "cronjobs")
   {

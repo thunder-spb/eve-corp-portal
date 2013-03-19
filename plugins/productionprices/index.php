@@ -3,7 +3,7 @@ require_once('../../core/core.class.php');
 $core = new Core();
 
 //Access control
-if($core->CurrentUser()->AccessRight() < 3) $core->Goto('../../php/access.php');
+if($core->CurrentUser()->AccessRight() < 3) $core->GotoUrl('../../php/access.php');
 
 $action = @$_GET["action"];
 if(empty($action)) $action = "home";
@@ -134,7 +134,7 @@ elseif($action == "addrigbackend")
    $query .= "'".$core->SQLEscape($row["GroupName"])."',1)";
    $core->SQL($query);
   }
-  $core->Goto('index.php');
+  $core->GotoUrl('index.php');
 }
 elseif($action == "addshipdone")
 {
@@ -154,7 +154,7 @@ elseif($action == "addshipdone")
   $query .= "'".$core->SQLEscape($item["GroupName"])."',";
   $query .= "'".$core->SQLEscape($item["Race"])."',0)";
   $core->SQL($query);
-  $core->Goto("index.php");
+  $core->GotoUrl("index.php");
 }
 elseif($action == "addrigdone")
 {
@@ -173,7 +173,7 @@ elseif($action == "addrigdone")
   $query .= $allyprice.",";
   $query .= "'".$core->SQLEscape($item["GroupName"])."',1)";
   $core->SQL($query);
-  $core->Goto("index.php");
+  $core->GotoUrl("index.php");
 }
 elseif($action == "changebypercent")
 {
@@ -210,7 +210,7 @@ elseif($action == "delete")
 {
   $id = $_GET["delete"];
   $core->SQL("DELETE FROM production_items WHERE id=".$id." LIMIT 1");
-  $core->Goto("index.php");
+  $core->GotoUrl("index.php");
 }
 elseif($action == "edit")
 {
@@ -271,7 +271,7 @@ elseif($action == "editdone")
     $allyprice = $_POST["allyprice"];
     $core->SQL("UPDATE production_items SET Price=".$price.",AlliancePrice=".$allyprice." WHERE id=".$id." LIMIT 1");
   }
-  $core->Goto("index.php");
+  $core->GotoUrl("index.php");
 }
 
 $core->assign('action', $action);

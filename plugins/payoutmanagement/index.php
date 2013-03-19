@@ -3,7 +3,7 @@ require_once('../../core/core.class.php');
 $core = new Core();
 
 //Access control
-if($core->CurrentUser()->AccessRight() < 4) $core->Goto('../../php/access.php');
+if($core->CurrentUser()->AccessRight() < 4) $core->GotoUrl('../../php/access.php');
 
 $action = @$_GET["action"];
 
@@ -33,7 +33,7 @@ if($action == "payout")
       $text .= "<p><b>REASON:</b><br />".$_POST["reject"]."</p>";
       $core->SendMail($date." Operation Rejected", $text, $leader);
     }
-    $core->Goto("index.php");
+    $core->GotoUrl("index.php");
   }
   else
   {
@@ -134,7 +134,7 @@ elseif($action == "payoutdone")
 
   // Mark selected ops as paid
   $core->SQL("UPDATE operations_submissions SET Status=4 WHERE FIND_IN_SET(id, '".implode(",", $opids)."')");
-  $core->Goto("index.php");
+  $core->GotoUrl("index.php");
 }
 else
 {

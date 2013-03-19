@@ -122,7 +122,7 @@ class Core extends Smarty
       
       // Guest access is not allowed in-game
       if((substr($_SERVER["REQUEST_URI"], -9) != "login.php") && $this->CurrentUser()->Name == "Guest")
-        $this->Goto("../php/login.php");      
+        $this->GotoUrl("../php/login.php");      
     }
     
     $this->QueryCount = 0;
@@ -791,7 +791,7 @@ class Core extends Smarty
       if($readaccess != 0)
       {
         $contents .= "\n\n//Access control";
-        $contents .= "\nif(\$core->CurrentUser()->AccessRight() < ".$readaccess.") \$core->Goto('../../php/access.php');";
+        $contents .= "\nif(\$core->CurrentUser()->AccessRight() < ".$readaccess.") \$core->GotoUrl('../../php/access.php');";
       }
       $contents .= "\n\n\$core->assign('welcomemessage', 'Hello World');";
       $contents .= "\n\$core->display(\$core->PlugInPath.\"".$name."/".$name.".tpl\");";
@@ -2830,7 +2830,7 @@ database: '.$this->PluginDBName);
   // *******************************************************
   // Navigates to the given URL
   // *******************************************************  
-  public function Goto($url)
+  public function GotoUrl($url)
   {
     header("Location: ".$url);
     exit;

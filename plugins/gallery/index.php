@@ -3,8 +3,8 @@ require_once('../../core/core.class.php');
 $core = new Core();
 
 //Access control
-//if($core->CurrentUser()->AccessRight() < 1) $core->Goto('../../php/access.php');
-if($core->CurrentUser()->Name == "Guest") $core->Goto('../../php/access.php');
+//if($core->CurrentUser()->AccessRight() < 1) $core->GotoUrl('../../php/access.php');
+if($core->CurrentUser()->Name == "Guest") $core->GotoUrl('../../php/access.php');
 
 if($core->CurrentUser()->AccessRight() == 0)
 {
@@ -56,7 +56,7 @@ if($action == "home" || $action == "user" || $action == "recruitment")
   }
   elseif($action == "recruitment")
   {
-    if($core->CurrentUser()->AccessRight() < 3) $core->Goto('../../php/access.php');
+    if($core->CurrentUser()->AccessRight() < 3) $core->GotoUrl('../../php/access.php');
     $recruitment = $_GET["recruitment"];
      if ($recruitment == "all")
     {
@@ -177,7 +177,7 @@ elseif($action == "upload")
         }
         else
         {
-            $core->Goto('../../php/access.php');
+            $core->GotoUrl('../../php/access.php');
         }
     }
   $maxsize = 2; // GB
@@ -248,15 +248,15 @@ elseif($action == "uploaddone")
 
     if($core->CurrentUser()->AccessRight() == 0)
     {
-        $core->Goto("index.php?action=user&result=1");
+        $core->GotoUrl("index.php?action=user&result=1");
     }
     else
     {
-    	$core->Goto("index.php?action=user&result=1");
+    	$core->GotoUrl("index.php?action=user&result=1");
     }
   }
   else
-    $core->Goto("index.php?action=upload&result=2");
+    $core->GotoUrl("index.php?action=upload&result=2");
 }
 elseif($action == "delete")
 {
@@ -272,11 +272,11 @@ elseif($action == "delete")
   unlink($path.DIRECTORY_SEPARATOR.$thumb);
 
   $core->SQL("DELETE FROM gallery WHERE id=".$id." LIMIT 1");
-  $core->Goto("index.php");
+  $core->GotoUrl("index.php");
 }
 elseif($action == "admin")
 {
-  if($core->CurrentUser()->AccessRight() < 4) $core->Goto('../../php/access.php');
+  if($core->CurrentUser()->AccessRight() < 4) $core->GotoUrl('../../php/access.php');
 
   $maxsize = 2; // GB
   $path = dirname(__FILE__).DIRECTORY_SEPARATOR."images".DIRECTORY_SEPARATOR;
@@ -310,7 +310,7 @@ elseif($action == "admin")
 }
 elseif($action == "delete1year" || $action == "delete6month" || $action == "delete1month")
 {
-  if($core->CurrentUser()->AccessRight() < 4) $core->Goto('../../php/access.php');
+  if($core->CurrentUser()->AccessRight() < 4) $core->GotoUrl('../../php/access.php');
 
   $users = $core->GetAllUsers(false, true);
   $path = dirname(__FILE__).DIRECTORY_SEPARATOR."images";
@@ -346,11 +346,11 @@ elseif($action == "delete1year" || $action == "delete6month" || $action == "dele
     }
   }
   $core->SQL("DELETE FROM gallery WHERE FIND_IN_SET(id,'".implode(",",$ids)."')");
-  $core->Goto("index.php?action=admin");
+  $core->GotoUrl("index.php?action=admin");
 }
 elseif($action == "deleteall")
 {
-  if($core->CurrentUser()->AccessRight() < 4) $core->Goto('../../php/access.php');
+  if($core->CurrentUser()->AccessRight() < 4) $core->GotoUrl('../../php/access.php');
 
   $path = dirname(__FILE__).DIRECTORY_SEPARATOR."images".DIRECTORY_SEPARATOR;
   $dir = opendir($path);
@@ -362,11 +362,11 @@ elseif($action == "deleteall")
   closedir($dir);
   $core->SQL("DELETE FROM gallery");
 
-  $core->Goto("index.php?action=admin");
+  $core->GotoUrl("index.php?action=admin");
 }
 elseif($action == "deletethumbs")
 {
-  if($core->CurrentUser()->AccessRight() < 4) $core->Goto('../../php/access.php');
+  if($core->CurrentUser()->AccessRight() < 4) $core->GotoUrl('../../php/access.php');
 
   $path = dirname(__FILE__).DIRECTORY_SEPARATOR."images".DIRECTORY_SEPARATOR;
   $dir = opendir($path);
@@ -377,7 +377,7 @@ elseif($action == "deletethumbs")
   }
   closedir($dir);
 
-  $core->Goto("index.php?action=admin");
+  $core->GotoUrl("index.php?action=admin");
 }
 elseif($action == "comment")
 {
@@ -387,13 +387,13 @@ elseif($action == "comment")
   {
     $core->SQL("INSERT INTO gallery_comments (Image,Date,User,Comment) VALUES (".$id.",'".$core->GMTTime()."',".$core->CurrentUser()->ID.",'".$core->SQLEscape($text)."')");
   }
-  $core->Goto("index.php?show=".$id);
+  $core->GotoUrl("index.php?show=".$id);
 }
 elseif($action == "deletecomment")
 {
   $id = $_GET["deletecomment"];
   $core->SQL("DELETE FROM gallery_comments WHERE id=".$id);
-  $core->Goto("index.php?show=".$_GET["image"]);
+  $core->GotoUrl("index.php?show=".$_GET["image"]);
 }
 
 $core->assign("action", $action);

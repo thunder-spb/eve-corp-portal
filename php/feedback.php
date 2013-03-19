@@ -6,7 +6,7 @@
 $cms->CurrentUser()->HasPortalRole(User::MDYN_Administrator))
   {
     $cms->CoreSQL("DELETE FROM feedback WHERE id=".$_GET["delete"]." LIMIT 1");
-    $cms->Goto("feedback.php");
+    $cms->GotoUrl("feedback.php");
   }
   elseif($cms->CurrentUser()->HasPortalRole(User::MDYN_Administrator))
   {
@@ -32,7 +32,7 @@ $cms->CurrentUser()->HasPortalRole(User::MDYN_Administrator))
     $query .= "'".$cms->SQLEscape($_POST["apikey"])."',";
     $query .= "'".$cms->SQLEscape($_POST["notes"])."')";
     $cms->CoreSQL($query);
-    $cms->Goto("feedback.php?result=1");
+    $cms->GotoUrl("feedback.php?result=1");
   }
   
   $cms->display('feedback.tpl');
